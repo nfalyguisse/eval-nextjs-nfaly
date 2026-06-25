@@ -69,6 +69,71 @@ type ContentRelationshipFieldWithData<
   >;
 }[Exclude<TCustomType[number], string>["id"]];
 
+type MentionsDocumentDataSlicesSlice = SectionTxtSlice;
+
+/**
+ * Content for mentions documents
+ */
+interface MentionsDocumentData {
+  /**
+   * Slice Zone field in *mentions*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mentions.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<MentionsDocumentDataSlicesSlice>; /**
+   * Meta Title field in *mentions*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A title of the page used for social media and search engines
+   * - **API ID Path**: mentions.meta_title
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_title: prismic.KeyTextField;
+
+  /**
+   * Meta Description field in *mentions*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: A brief summary of the page
+   * - **API ID Path**: mentions.meta_description
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  meta_description: prismic.KeyTextField;
+
+  /**
+   * Meta Image field in *mentions*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: mentions.meta_image
+   * - **Tab**: SEO & Metadata
+   * - **Documentation**: https://prismic.io/docs/fields/image
+   */
+  meta_image: prismic.ImageField<never>;
+}
+
+/**
+ * mentions document from Prismic
+ *
+ * - **API ID**: `mentions`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type MentionsDocument<Lang extends string = string> =
+  prismic.PrismicDocumentWithoutUID<
+    Simplify<MentionsDocumentData>,
+    "mentions",
+    Lang
+  >;
+
 /**
  * Item in *offer → admin*
  */
@@ -84,7 +149,7 @@ export interface OfferDocumentDataAdminItem {
   email_admin: prismic.KeyTextField;
 }
 
-type OfferDocumentDataSlicesSlice = never;
+type OfferDocumentDataSlicesSlice = SectionTxtSlice;
 
 /**
  * Content for offer documents
@@ -158,7 +223,62 @@ interface OfferDocumentData {
 export type OfferDocument<Lang extends string = string> =
   prismic.PrismicDocumentWithUID<Simplify<OfferDocumentData>, "offer", Lang>;
 
-export type AllDocumentTypes = OfferDocument;
+export type AllDocumentTypes = MentionsDocument | OfferDocument;
+
+/**
+ * Primary content in *SectionTxt → Default → Primary*
+ */
+export interface SectionTxtSliceDefaultPrimary {
+  /**
+   * title field in *SectionTxt → Default → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: section_txt.default.primary.title
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  title: prismic.KeyTextField;
+
+  /**
+   * paragraph field in *SectionTxt → Default → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: section_txt.default.primary.paragraph
+   * - **Documentation**: https://prismic.io/docs/fields/rich-text
+   */
+  paragraph: prismic.RichTextField;
+}
+
+/**
+ * Default variation for SectionTxt Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type SectionTxtSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<SectionTxtSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *SectionTxt*
+ */
+type SectionTxtSliceVariation = SectionTxtSliceDefault;
+
+/**
+ * SectionTxt Shared Slice
+ *
+ * - **API ID**: `section_txt`
+ * - **Description**: SectionTxt
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type SectionTxtSlice = prismic.SharedSlice<
+  "section_txt",
+  SectionTxtSliceVariation
+>;
 
 declare module "@prismicio/client" {
   interface CreateClient {
@@ -181,11 +301,18 @@ declare module "@prismicio/client" {
 
   namespace Content {
     export type {
+      MentionsDocument,
+      MentionsDocumentData,
+      MentionsDocumentDataSlicesSlice,
       OfferDocument,
       OfferDocumentData,
       OfferDocumentDataAdminItem,
       OfferDocumentDataSlicesSlice,
       AllDocumentTypes,
+      SectionTxtSlice,
+      SectionTxtSliceDefaultPrimary,
+      SectionTxtSliceVariation,
+      SectionTxtSliceDefault,
     };
   }
 }

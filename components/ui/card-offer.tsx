@@ -1,9 +1,10 @@
 "use client";
 
-import { PrismicRichText } from "@prismicio/react";
+import { PrismicRichText, SliceZone } from "@prismicio/react";
 import type { OfferDocument } from "@/prismicio-types";
 import Link from "next/link";
 import { useFavorisStore } from "@/store/favoris";
+import SectionTxt from "@/slices/SectionTxt";
 
 function formatDate(dateStr: string | null | undefined): string {
   if (!dateStr) return "";

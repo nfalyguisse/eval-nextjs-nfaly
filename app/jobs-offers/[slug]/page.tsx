@@ -1,6 +1,7 @@
 import ContactForm from "@/components/forms/contact-form";
 import { createClient } from "@/prismicio";
-import { PrismicRichText } from "@prismicio/react";
+import SectionTxt from "@/slices/SectionTxt";
+import { PrismicRichText, SliceZone } from "@prismicio/react";
 
 export async function generateStaticParams() {
   const client = createClient();
@@ -35,12 +36,19 @@ export default async function JobOfferDetail({
           {published_at}
         </p>
       )}
-
+      Description :
       <div className="text-sm text-gray-700 leading-relaxed [&_p]:mb-4">
         <PrismicRichText field={description} />
       </div>
-
-      <ContactForm emailsAdmin={offer.data.admin.map((admin) => admin.email_admin)} />
+      <SliceZone
+        slices={offer.data.slices}
+        components={{
+          section_txt: SectionTxt,
+        }}
+      />
+      <ContactForm
+        emailsAdmin={offer.data.admin.map((admin) => admin.email_admin)}
+      />
     </div>
   );
 }

@@ -8,6 +8,9 @@ export function Header() {
         <Link href="/">
           <Image src="/logo.png" alt="logo" width={80} height={80} />
         </Link>
+        <Link href="/mentions" className="text-white">
+          Mentions légales
+        </Link>
         <Link href="/favoris">
           <Image src="/login.png" alt="logo" width={30} height={40} />
         </Link>
