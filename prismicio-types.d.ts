@@ -70,6 +70,23 @@ type ContentRelationshipFieldWithData<
 }[Exclude<TCustomType[number], string>["id"]];
 
 /**
+ * Item in *offer → admin*
+ */
+export interface OfferDocumentDataAdminItem {
+  /**
+   * email_admin field in *offer → admin*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: offer.admin[].email_admin
+   * - **Documentation**: https://prismic.io/docs/fields/text
+   */
+  email_admin: prismic.KeyTextField;
+}
+
+type OfferDocumentDataSlicesSlice = never;
+
+/**
  * Content for offer documents
  */
 interface OfferDocumentData {
@@ -105,6 +122,28 @@ interface OfferDocumentData {
    * - **Documentation**: https://prismic.io/docs/fields/rich-text
    */
   description: prismic.RichTextField;
+
+  /**
+   * admin field in *offer*
+   *
+   * - **Field Type**: Group
+   * - **Placeholder**: *None*
+   * - **API ID Path**: offer.admin[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+   */
+  admin: prismic.GroupField<Simplify<OfferDocumentDataAdminItem>>;
+
+  /**
+   * Slice Zone field in *offer*
+   *
+   * - **Field Type**: Slice Zone
+   * - **Placeholder**: *None*
+   * - **API ID Path**: offer.slices[]
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/slices
+   */
+  slices: prismic.SliceZone<OfferDocumentDataSlicesSlice>;
 }
 
 /**
@@ -141,6 +180,12 @@ declare module "@prismicio/client" {
   }
 
   namespace Content {
-    export type { OfferDocument, OfferDocumentData, AllDocumentTypes };
+    export type {
+      OfferDocument,
+      OfferDocumentData,
+      OfferDocumentDataAdminItem,
+      OfferDocumentDataSlicesSlice,
+      AllDocumentTypes,
+    };
   }
 }

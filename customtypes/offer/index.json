@@ -2,6 +2,8 @@
   "id": "offer",
   "label": "offer",
   "repeatable": true,
+  "status": true,
+  "format": "page",
   "json": {
     "Main": {
       "uid": {
@@ -32,9 +34,30 @@
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,rtl,o-list-item",
           "allowTargetBlank": true
         }
+      },
+      "admin": {
+        "type": "Group",
+        "config": {
+          "label": "admin",
+          "repeat": true,
+          "fields": {
+            "email_admin": {
+              "type": "Text",
+              "config": {
+                "label": "email_admin",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      },
+      "slices": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {}
+        }
       }
     }
-  },
-  "status": true,
-  "format": "custom"
+  }
 }

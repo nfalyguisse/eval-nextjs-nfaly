@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/prismicio";
-import { CardOffer } from "@/app/ux/components/card-offer";
+import { CardOffer } from "@/components/card-offer";
 
 export default async function Home() {
   const client = createClient();
