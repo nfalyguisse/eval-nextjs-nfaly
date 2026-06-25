@@ -1,6 +1,9 @@
+"use client";
+
 import { PrismicRichText } from "@prismicio/react";
 import type { OfferDocument } from "@/prismicio-types";
 import Link from "next/link";
+import { useFavorisStore } from "@/store/favoris";
 
 function formatDate(dateStr: string | null | undefined): string {
   if (!dateStr) return "";
@@ -10,6 +13,17 @@ function formatDate(dateStr: string | null | undefined): string {
 
 export function CardOffer({ offer }: { offer: OfferDocument }) {
   const { label, published_at, description } = offer.data;
+  const { addFavori, removeFavori, isFavori } = useFavorisStore();
+  const saved = isFavori(offer);
+
+  function handleToggle(e: React.MouseEvent) {
+    e.preventDefault();
+    if (saved) {
+      removeFavori(offer);
+    } else {
+      addFavori(offer);
+    }
+  }
 
   return (
     <Link
@@ -18,8 +32,12 @@ export function CardOffer({ offer }: { offer: OfferDocument }) {
     >
       <div className="flex items-start justify-between gap-2">
         <h2 className="">{label}</h2>
-        <button type="button" className="bg-gray-200 p-2">
-          Sauvegarder
+        <button
+          type="button"
+          onClick={handleToggle}
+          className={`p-2 ${saved ? "bg-black text-white" : "bg-gray-200"}`}
+        >
+          {saved ? "Sauvegardé" : "Sauvegarder"}
         </button>
       </div>
 

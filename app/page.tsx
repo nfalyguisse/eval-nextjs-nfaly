@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/prismicio";
-import { CardOffer } from "@/components/card-offer";
+import { CardOffer } from "@/components/ui/card-offer";
 
 export default async function Home() {
   const client = createClient();
   const offers = await client.getAllByType("offer", {
-    orderings: [{ field: "document.last_publication_date", direction: "desc" }],
+    orderings: [{ field: "document.published_at", direction: "desc" }],
     limit: 3,
   });
 

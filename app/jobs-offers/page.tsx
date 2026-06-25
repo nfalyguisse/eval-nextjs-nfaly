@@ -1,5 +1,5 @@
 import { createClient } from "@/prismicio";
-import { CardOffer } from "@/components/card-offer";
+import { CardOffer } from "@/components/ui/card-offer";
 
 export default async function JobsOffers() {
   const client = createClient();
