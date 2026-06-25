@@ -2,6 +2,7 @@ import ContactForm from "@/components/forms/contact-form";
 import { createClient } from "@/prismicio";
 import SectionTxt from "@/slices/SectionTxt";
 import { PrismicRichText, SliceZone } from "@prismicio/react";
+import { CalendarDays } from "lucide-react";
 
 export async function generateStaticParams() {
   const client = createClient();
@@ -23,16 +24,16 @@ export default async function JobOfferDetail({
   const { label, published_at, description } = offer.data;
 
   return (
-    <div className="py-10">
+    <div className="p-10">
       <div className="flex justify-between gap-2">
-        <h1 className="text-xl font-bold mb-2">{label}</h1>
+        <h1 className="text-[#0F1941] text-xl font-bold mb-2">{label}</h1>
         <button type="button" className="bg-gray-200 p-2">
           Sauvegarder
         </button>
       </div>
       {published_at && (
         <p className="flex items-center gap-1.5 text-xs font-medium mb-4">
-          <span>Publié le :</span>
+          <CalendarDays size={16} /><span>Publié le :</span>
           {published_at}
         </p>
       )}

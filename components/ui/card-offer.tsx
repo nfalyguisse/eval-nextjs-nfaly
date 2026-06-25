@@ -5,6 +5,7 @@ import type { OfferDocument } from "@/prismicio-types";
 import Link from "next/link";
 import { useFavorisStore } from "@/store/favoris";
 import SectionTxt from "@/slices/SectionTxt";
+import { CalendarDays } from "lucide-react";
 
 function formatDate(dateStr: string | null | undefined): string {
   if (!dateStr) return "";
@@ -32,7 +33,7 @@ export function CardOffer({ offer }: { offer: OfferDocument }) {
       href={`/jobs-offers/${offer.uid}`}
     >
       <div className="flex items-start justify-between gap-2">
-        <h2 className="">{label}</h2>
+        <h2 className="text-[#0F1941] text-lg font-bold">{label}</h2>
         <button
           type="button"
           onClick={handleToggle}
@@ -43,8 +44,11 @@ export function CardOffer({ offer }: { offer: OfferDocument }) {
       </div>
 
       {published_at && (
-        <p className="flex items-center gap-1.5 text-xs font-medium">
-          <span>date de publication :</span>
+        <p className="flex items-center text-xs font-medium">
+          <span className="flex items-center gap-1.5">
+            {" "}
+            <CalendarDays size={16} /> Publié le :
+          </span>
           {formatDate(published_at)}
         </p>
       )}
